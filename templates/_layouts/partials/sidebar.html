@@ -1,0 +1,54 @@
+{% load util %}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-info elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link bg-info logo-sidebar center"><strong>{% getenv "APP_NAME" "SoulSin" %}</strong></a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                {% menu user as items %}
+
+                {% for item in items %}
+                    {% if item|isstr %}
+                        <li class="nav-header">{{ item }}</li>
+                    {% elif item.submenu %}
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-{{ item.icon }}"></i>
+                                <p class="text">
+                                    {{ item.text }}
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                {% for subitem in item.submenu %}
+                                    {% if subitem.url %}
+                                        <li class="nav-item">
+                                            <a href="{% if subitem.params %}{% url subitem.url subitem.params %}{% else %}{% url subitem.url %}{% endif %}" class="nav-link">
+                                                <i class="nav-icon fas fa-circle" style="font-size: 10px;"></i>
+                                                <p class="text">{{ subitem.text }}</p>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% elif item.url %}
+                        <li class="nav-item">
+                            <a href="{% if item.params %}{% url item.url item.params %}{% else %}{% url item.url %}{% endif %}" class="nav-link">
+                                <i class="nav-icon fas fa-{{ item.icon }}"></i>
+                                <p class="text">{{ item.text }}</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

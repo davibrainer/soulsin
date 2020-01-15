@@ -1,0 +1,16 @@
+{% extends "_layouts/page.html" %}
+
+{% block conteudo %}
+
+    {% if user.is_authenticated %}
+        <p class="logged-in-p">
+            Olá {{ user.username }} seja bem vindo!<br>
+            <span class="sair"><a href="{% url 'logout' %}">Sair</a></span>
+        </p>
+    {% endif %}
+
+    <div class="login-logo mt-5" style="font-size: 80px; color: lightgray;">
+        <b>SoulSin</b>
+    </div>
+
+{% endblock %}
